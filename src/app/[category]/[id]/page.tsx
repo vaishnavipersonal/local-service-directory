@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import { getDirectoryData } from '@/lib/sheets';
 import { MapPin, Star, PhoneCall, MessageCircle, Clock, ShieldCheck, ChevronRight, Store } from 'lucide-react';
 
+export const revalidate = 60; // Revalidate at most every 60 seconds
+
 type Props = {
   params: Promise<{ category: string; id: string }>;
 };

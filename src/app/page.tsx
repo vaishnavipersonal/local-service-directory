@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { getDirectoryData } from '@/lib/sheets';
 import { Wrench, Zap, PaintRoller, Home, Hammer, ShieldCheck, MapPin, Store, HelpCircle } from 'lucide-react';
 
+export const revalidate = 60; // Revalidate at most every 60 seconds
+
 const getCategoryIcon = (category: string) => {
   const cat = category.toLowerCase();
   if (cat.includes('plumb')) return <Wrench className="w-6 h-6 text-blue-500" />;

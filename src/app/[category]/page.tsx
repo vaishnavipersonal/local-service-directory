@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { getDirectoryData } from '@/lib/sheets';
 import { MapPin, Star, PhoneCall, MessageCircle, Clock, ChevronRight } from 'lucide-react';
 
+export const revalidate = 60; // Revalidate at most every 60 seconds
+
 type Props = {
   params: Promise<{ category: string }>;
 };
