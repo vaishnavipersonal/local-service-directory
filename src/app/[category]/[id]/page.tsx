@@ -68,87 +68,114 @@ export default async function ProviderPage(props: Props) {
   };
 
   return (
-    <main className="min-h-screen bg-slate-50 py-12 px-6">
+    <main className="min-h-screen relative overflow-hidden">
       {/* Inject JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="max-w-4xl mx-auto space-y-8">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-[-20%] left-[10%] w-[60%] h-[60%] bg-blue-100 rounded-full blur-[140px] opacity-50 animate-float" />
+      
+      <div className="relative z-10 py-16 px-6 max-w-5xl mx-auto space-y-10 animate-fade-in-up">
         
         {/* Breadcrumb */}
-        <div className="flex items-center space-x-2 text-sm text-gray-500 mb-6">
+        <div className="flex items-center space-x-2 text-base text-slate-500 mb-8 font-medium">
           <Link href="/" className="hover:text-blue-600 transition-colors">Home</Link>
           <ChevronRight className="w-4 h-4" />
           <Link href={`/${categoryStr}`} className="hover:text-blue-600 transition-colors">{capitalizedCategory}</Link>
           <ChevronRight className="w-4 h-4" />
-          <span className="text-gray-900 font-medium truncate">{provider.business_name}</span>
+          <span className="text-slate-900 font-bold truncate">{provider.business_name}</span>
         </div>
 
-        {/* Profile Card */}
-        <div className="bg-white rounded-3xl p-8 md:p-10 shadow-sm border border-slate-200">
-          <div className="flex flex-col md:flex-row gap-8 items-start">
-            
-            {/* Left: Info */}
-            <div className="flex-1 space-y-6">
-              <div>
-                <div className="flex items-center space-x-3 mb-2">
-                  <span className="bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full font-medium inline-flex items-center">
-                    <Store className="w-3 h-3 mr-1.5" />
-                    {provider.category}
+        {/* Profile Card Layout */}
+        <div className="flex flex-col lg:flex-row gap-10 items-start">
+          
+          {/* Left: Info */}
+          <div className="flex-1 space-y-8 w-full">
+            <div className="glass-card rounded-[3rem] p-10 md:p-14">
+              <div className="flex items-center space-x-4 mb-6">
+                <span className="bg-blue-100/80 text-blue-800 text-sm px-4 py-2 rounded-full font-bold inline-flex items-center border border-blue-200">
+                  <Store className="w-4 h-4 mr-2" />
+                  {provider.category}
+                </span>
+                {provider.is_verified && (
+                  <span className="bg-emerald-100/80 text-emerald-800 text-sm px-4 py-2 rounded-full font-bold inline-flex items-center border border-emerald-200">
+                    <ShieldCheck className="w-4 h-4 mr-2" />
+                    Verified by Saket Directory
                   </span>
-                  {provider.is_verified && (
-                    <span className="bg-emerald-100 text-emerald-700 text-xs px-3 py-1 rounded-full font-medium inline-flex items-center">
-                      <ShieldCheck className="w-3 h-3 mr-1.5" />
-                      Verified
-                    </span>
-                  )}
-                </div>
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
-                  {provider.business_name}
-                </h1>
+                )}
               </div>
+              
+              <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 leading-tight mb-8">
+                {provider.business_name}
+              </h1>
 
-              <div className="space-y-3 text-lg">
-                <div className="flex items-center text-gray-600">
-                  <MapPin className="w-5 h-5 mr-3 text-gray-400" />
-                  {provider.locality}
+              {/* Bento Box Details */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-white/60 rounded-3xl p-6 border border-slate-100 flex items-start space-x-4">
+                  <div className="p-3 bg-slate-100 rounded-2xl text-slate-600">
+                    <MapPin className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-lg">Location</h3>
+                    <p className="text-slate-600 font-medium mt-1">{provider.locality}, Saket</p>
+                  </div>
                 </div>
+
                 {provider.rating && (
-                  <div className="flex items-center text-amber-500 font-medium">
-                    <Star className="w-5 h-5 mr-3 fill-current" />
-                    {provider.rating} Rating
+                  <div className="bg-white/60 rounded-3xl p-6 border border-slate-100 flex items-start space-x-4">
+                    <div className="p-3 bg-amber-50 rounded-2xl text-amber-500">
+                      <Star className="w-6 h-6 fill-current" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 text-lg">Rating</h3>
+                      <p className="text-slate-600 font-medium mt-1">{provider.rating} / 5.0</p>
+                    </div>
                   </div>
                 )}
+
                 {provider.experience_years && (
-                  <div className="flex items-center text-gray-600">
-                    <Clock className="w-5 h-5 mr-3 text-gray-400" />
-                    {provider.experience_years} Years of Experience
+                  <div className="bg-white/60 rounded-3xl p-6 border border-slate-100 flex items-start space-x-4">
+                    <div className="p-3 bg-blue-50 rounded-2xl text-blue-500">
+                      <Clock className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-slate-900 text-lg">Experience</h3>
+                      <p className="text-slate-600 font-medium mt-1">{provider.experience_years} Years in Business</p>
+                    </div>
                   </div>
                 )}
               </div>
             </div>
+          </div>
 
-            {/* Right: Actions */}
-            <div className="w-full md:w-72 bg-slate-50 p-6 rounded-2xl border border-slate-100 space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900 text-center mb-4">Contact Provider</h3>
-              <a 
-                href={`tel:${provider.contact_number}`} 
-                className="flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl font-medium transition-colors w-full text-lg"
-              >
-                <PhoneCall className="w-5 h-5" />
-                <span>Call Now</span>
-              </a>
-              <a 
-                href={`https://wa.me/${provider.whatsapp_number}?text=Hi,%20I%20found%20you%20on%20the%20Local%20Service%20Directory.`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center space-x-2 bg-green-500 hover:bg-green-600 text-white py-3.5 rounded-xl font-medium transition-colors w-full text-lg"
-              >
-                <MessageCircle className="w-5 h-5" />
-                <span>WhatsApp</span>
-              </a>
+          {/* Right: Actions (Sticky) */}
+          <div className="w-full lg:w-96 sticky top-8 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            <div className="glass-card rounded-[3rem] p-8 border border-slate-200/80 shadow-xl shadow-slate-200/50">
+              <h3 className="text-2xl font-bold text-slate-900 text-center mb-8">Ready to book?</h3>
+              <div className="space-y-4">
+                <a 
+                  href={`tel:${provider.contact_number}`} 
+                  className="flex items-center justify-center space-x-3 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl font-bold transition-all shadow-md shadow-blue-200 hover:-translate-y-0.5 text-lg"
+                >
+                  <PhoneCall className="w-6 h-6" />
+                  <span>Call Provider</span>
+                </a>
+                <a 
+                  href={`https://wa.me/${provider.whatsapp_number}?text=Hi,%20I%20found%20you%20on%20the%20Local%20Service%20Directory.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center space-x-3 bg-emerald-500 hover:bg-emerald-600 text-white py-4 rounded-2xl font-bold transition-all shadow-md shadow-emerald-200 hover:-translate-y-0.5 text-lg"
+                >
+                  <MessageCircle className="w-6 h-6" />
+                  <span>WhatsApp Message</span>
+                </a>
+              </div>
+              <p className="text-center text-sm text-slate-500 font-medium mt-6">
+                Average response time: &lt; 1 hour
+              </p>
             </div>
           </div>
         </div>
