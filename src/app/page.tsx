@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { getDirectoryData } from '@/lib/sheets';
-import { Wrench, Zap, PaintRoller, Home, Hammer, ShieldCheck, MapPin, Store, HelpCircle, Heart, UserPlus, Clock, Star, Quote } from 'lucide-react';
+import { Wrench, Zap, PaintRoller, Home, Hammer, ShieldCheck, MapPin, Store, HelpCircle, Heart, UserPlus, Clock, Star, Quote, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const revalidate = 60; // Revalidate at most every 60 seconds
 
@@ -44,7 +44,7 @@ export default async function HomePage() {
     count,
   }));
 
-  const featuredProviders = directoryData.filter((row) => row.is_verified);
+  const featuredProviders = directoryData.filter((row) => row.is_featured);
 
   return (
     <main className="min-h-screen relative overflow-hidden">
@@ -151,45 +151,100 @@ export default async function HomePage() {
         </section>
 
         {/* Featured Providers Section */}
-        <section className="py-20 px-6 max-w-6xl mx-auto">
-          <div className="flex items-center space-x-4 mb-12">
-            <ShieldCheck className="w-12 h-12 text-emerald-500" />
-            <h2 className="text-4xl font-bold text-slate-900">Featured Providers</h2>
+        <section className="py-24 px-0 max-w-[1400px] mx-auto overflow-hidden relative">
+          <div className="px-6 md:px-12 flex items-center justify-between mb-10">
+            <div>
+              <div className="flex items-center space-x-3 mb-2">
+                <ShieldCheck className="w-8 h-8 text-emerald-500" />
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Featured Providers</h2>
+              </div>
+              <p className="text-slate-500 text-lg font-medium">Trusted professionals, ready to help</p>
+            </div>
+            <div className="hidden md:flex space-x-3">
+              <button className="w-11 h-11 bg-white rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-900 hover:border-slate-300 shadow-sm transition-all">
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button className="w-11 h-11 bg-white rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-900 hover:border-slate-300 shadow-sm transition-all">
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
           </div>
 
           {featuredProviders.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {featuredProviders.map((provider) => (
-                <div key={provider.id} className="glass-card rounded-[2.5rem] p-8 flex flex-col h-full hover:shadow-xl transition-shadow duration-300">
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="flex items-center space-x-5">
-                      <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-50 text-blue-600 rounded-2xl flex items-center justify-center font-bold text-3xl shadow-inner border border-blue-200">
-                        {provider.business_name.charAt(0).toUpperCase()}
+            <div className="flex overflow-x-auto pb-10 pt-4 px-6 md:px-12 gap-6 snap-x snap-mandatory hide-scrollbar">
+              {featuredProviders.map((provider) => {
+                const icon = getCategoryIcon(provider.category);
+                return (
+                  <div key={provider.id} className="min-w-[340px] max-w-[340px] bg-white rounded-[24px] shadow-sm border border-slate-100/80 flex flex-col snap-start hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                    {/* Top Image */}
+                    <div className="h-48 w-full bg-slate-100 rounded-t-[24px] relative">
+                      {provider.image_url ? (
+                        <img src={provider.image_url} alt={provider.business_name} className="w-full h-full object-cover rounded-t-[24px]" />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 rounded-t-[24px]" />
+                      )}
+                      
+                      {/* Icon Overlap */}
+                      <div className="absolute -bottom-6 left-6 w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-md border border-slate-50">
+                        {icon}
                       </div>
-                      <div>
-                        <h3 className="font-bold text-2xl text-slate-900 line-clamp-1">{provider.business_name}</h3>
-                        <div className="flex items-center text-base text-slate-500 space-x-2 mt-1.5 font-medium">
-                          <Store className="w-4 h-4" />
-                          <span>{provider.category}</span>
-                        </div>
+                    </div>
+                    
+                    <div className="p-7 pt-10 flex flex-col flex-1">
+                      <h3 className="font-extrabold text-xl text-slate-900 mb-1">{provider.business_name}</h3>
+                      <div className="flex items-center text-sm text-slate-500 mb-5 font-medium">
+                        <MapPin className="w-4 h-4 mr-1 text-emerald-500" />
+                        {provider.locality}, Saket
+                      </div>
+                      
+                      {/* Badges */}
+                      <div className="mb-6">
+                        <span className="inline-block bg-[#f0f7ff] text-[#0066cc] text-[11px] font-bold px-3 py-1.5 rounded-md">
+                          {provider.badges || "Quick response • Affordable • Reliable"}
+                        </span>
+                      </div>
+                      
+                      {/* Services */}
+                      <div className="mb-8 flex-1">
+                        <h4 className="text-[13px] font-bold text-slate-900 mb-2.5">Services</h4>
+                        <p className="text-[14px] text-slate-500 font-medium leading-relaxed line-clamp-3">
+                          {provider.services || "General services, Consultation, Diagnostics, Repair, Maintenance"}
+                        </p>
+                      </div>
+                      
+                      {/* Action Buttons */}
+                      <div className="flex space-x-4 mt-auto">
+                        <a 
+                          href={`/${provider.category.toLowerCase()}/${provider.id}`}
+                          className="flex-[0.4] border border-slate-200 rounded-xl flex items-center justify-center py-3 text-slate-600 hover:bg-slate-50 transition-colors"
+                        >
+                          <MapPin className="w-5 h-5" />
+                        </a>
+                        <a 
+                          href={`https://wa.me/${provider.whatsapp_number}?text=Hi,%20I%20found%20you%20on%20the%20Local%20Service%20Directory.`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex-1 bg-[#12b959] hover:bg-[#0f9e4c] text-white rounded-xl flex items-center justify-center py-3 font-bold text-[15px] transition-colors shadow-sm"
+                        >
+                          <MessageCircle className="w-5 h-5 mr-1.5" />
+                          Chat
+                        </a>
                       </div>
                     </div>
                   </div>
-                  
-                  <div className="mt-auto pt-6 border-t border-slate-200/80">
-                    <div className="flex items-center text-slate-600 font-medium text-lg">
-                      <MapPin className="w-5 h-5 mr-2.5 text-slate-400" />
-                      {provider.locality}
-                    </div>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
-            <div className="text-center py-20 glass-card rounded-[3rem]">
-              <p className="text-slate-500 text-xl font-medium">No verified providers featured yet.</p>
+            <div className="text-center py-20 bg-white/60 backdrop-blur-md rounded-[3rem] mx-6 md:mx-12 border border-slate-100 shadow-sm">
+              <p className="text-slate-500 text-lg font-medium">No verified providers featured yet.</p>
             </div>
           )}
+          
+          <div className="text-center mt-4 mb-8 flex items-center justify-center text-[13px] text-slate-400 font-medium">
+            <ShieldCheck className="w-4 h-4 mr-1.5 opacity-70" />
+            All providers are background verified and trusted by our community.
+          </div>
         </section>
 
         {/* Reviews Section */}

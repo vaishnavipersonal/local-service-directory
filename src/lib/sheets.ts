@@ -11,6 +11,10 @@ export interface DirectoryRow {
   rating: string;
   experience_years: string;
   is_verified: boolean;
+  is_featured: boolean;
+  image_url: string;
+  badges: string;
+  services: string;
   meta_title: string;
   meta_description: string;
 }
@@ -48,6 +52,10 @@ export async function getDirectoryData(): Promise<DirectoryRow[]> {
       rating: row.get('rating') || '',
       experience_years: row.get('experience_years') || '',
       is_verified: row.get('is_verified') === 'TRUE' || row.get('is_verified') === 'true' || row.get('is_verified') === true,
+      is_featured: row.get('is_featured') === 'TRUE' || row.get('is_featured') === 'true' || row.get('is_featured') === true,
+      image_url: row.get('image_url') || '',
+      badges: row.get('badges') || '',
+      services: row.get('services') || '',
       meta_title: row.get('meta_title') || '',
       meta_description: row.get('meta_description') || '',
     }));
