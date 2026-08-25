@@ -60,7 +60,7 @@ export async function getDirectoryData(): Promise<DirectoryRow[]> {
         is_featured: data['is_featured'] === 'TRUE' || data['is_featured'] === 'true',
         rating: data['rating'] ? parseFloat(data['rating']) : undefined,
         experience_years: data['experience_years'] ? parseInt(data['experience_years'], 10) : undefined,
-        image_url: data['image_url'] || '',
+        image_url: convertDriveLinkToDirectImage(data['image_url'] || ''),
         badges: data['badges'] || '',
         services: data['services'] || '',
       };
@@ -69,4 +69,23 @@ export async function getDirectoryData(): Promise<DirectoryRow[]> {
     console.error('Error fetching directory data:', error);
     return [];
   }
+}
+
+// Helper to convert Google Drive share links to direct image links
+function convertDriveLinkToDirectImage(url: string): string {
+  if (!url) return '';
+  
+  // Match standard /file/d/ID/view links
+  const fileIdMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (fileIdMatch && fileIdMatch[1]) {
+    return `https://drive.google.com/uc?export=view&id=${fileIdMatch[1]}`;
+  }
+  
+  // Match open?id=ID links
+  const openIdMatch = url.match(/id=([a-zA-Z0-9_-]+)/);
+  if (openIdMatch && openIdMatch[1] && url.includes('drive.google.com')) {
+    return `https://drive.google.com/uc?export=view&id=${openIdMatch[1]}`;
+  }
+
+  return url;
 }
