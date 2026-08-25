@@ -78,13 +78,13 @@ function convertDriveLinkToDirectImage(url: string): string {
   // Match standard /file/d/ID/view links
   const fileIdMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
   if (fileIdMatch && fileIdMatch[1]) {
-    return `https://drive.google.com/uc?export=view&id=${fileIdMatch[1]}`;
+    return `https://lh3.googleusercontent.com/d/${fileIdMatch[1]}=w800`;
   }
   
   // Match open?id=ID links
   const openIdMatch = url.match(/id=([a-zA-Z0-9_-]+)/);
   if (openIdMatch && openIdMatch[1] && url.includes('drive.google.com')) {
-    return `https://drive.google.com/uc?export=view&id=${openIdMatch[1]}`;
+    return `https://lh3.googleusercontent.com/d/${openIdMatch[1]}=w800`;
   }
 
   return url;
