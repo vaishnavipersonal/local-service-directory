@@ -46,7 +46,7 @@ export async function getDirectoryData(): Promise<DirectoryRow[]> {
     return rows.map((row) => ({
       id: row.get('id') || '',
       category: row.get('category') || '',
-      sub_category: row.get('sub category') || '',
+      sub_category: row.get('sub-category') || row.get('sub category') || '',
       business_name: row.get('business_name') || '',
       contact_number: row.get('contact_number') || '',
       whatsapp_number: row.get('whatsapp_number') || '',
