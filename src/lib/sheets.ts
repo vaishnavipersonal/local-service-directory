@@ -43,24 +43,28 @@ export async function getDirectoryData(): Promise<DirectoryRow[]> {
 
     const rows = await sheet.getRows();
     
-    return rows.map((row) => ({
-      id: row.get('id') || '',
-      category: row.get('category') || '',
-      sub_category: row.get('sub-category') || row.get('sub category') || '',
-      business_name: row.get('business_name') || '',
-      contact_number: row.get('contact_number') || '',
-      whatsapp_number: row.get('whatsapp_number') || '',
-      locality: row.get('locality') || '',
-      rating: row.get('rating') || '',
-      experience_years: row.get('experience_years') || '',
-      is_verified: row.get('is_verified') === 'TRUE' || row.get('is_verified') === 'true' || row.get('is_verified') === true,
-      is_featured: row.get('is_featured') === 'TRUE' || row.get('is_featured') === 'true' || row.get('is_featured') === true,
-      image_url: row.get('image_url') || '',
-      badges: row.get('badges') || '',
-      services: row.get('services') || '',
-      meta_title: row.get('meta_title') || '',
-      meta_description: row.get('meta_description') || '',
-    }));
+    return rows.map((row) => {
+      const data = row.toObject();
+      return {
+        id: data['id'] || '',
+        category: data['category'] || '',
+        sub_category: data['sub-category'] || data['sub category'] || '',
+        business_name: data['business_name'] || '',
+        contact_number: data['contact_number'] || '',
+        whatsapp_number: data['whatsapp_number'] || '',
+        address: data['address'] || '',
+        locality: data['locality'] || '',
+        meta_title: data['meta_title'] || '',
+        meta_description: data['meta_description'] || '',
+        is_verified: data['is_verified'] === 'TRUE' || data['is_verified'] === 'true',
+        is_featured: data['is_featured'] === 'TRUE' || data['is_featured'] === 'true',
+        rating: data['rating'] ? parseFloat(data['rating']) : undefined,
+        experience_years: data['experience_years'] ? parseInt(data['experience_years'], 10) : undefined,
+        image_url: data['image_url'] || '',
+        badges: data['badges'] || '',
+        services: data['services'] || '',
+      };
+    });
   } catch (error) {
     console.error('Error fetching directory data:', error);
     return [];
