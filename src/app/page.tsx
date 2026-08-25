@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import CategoryAccordion from '@/components/CategoryAccordion';
 import { getDirectoryData } from '@/lib/sheets';
 import { Wrench, Zap, PaintRoller, Home, Hammer, ShieldCheck, MapPin, Store, HelpCircle, Heart, UserPlus, Clock, Star, Quote, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -32,17 +33,23 @@ const REVIEWS = [
 export default async function HomePage() {
   const directoryData = await getDirectoryData();
 
-  const categoryCounts = directoryData.reduce((acc, row) => {
-    if (row.category) {
-      acc[row.category] = (acc[row.category] || 0) + 1;
+  const groupedCategories = directoryData.reduce((acc, row) => {
+    const mainCat = row.category || 'Other Services';
+    const subCat = row.sub_category;
+    
+    if (!acc[mainCat]) {
+      acc[mainCat] = {};
+    }
+    if (subCat) {
+      acc[mainCat][subCat] = (acc[mainCat][subCat] || 0) + 1;
     }
     return acc;
-  }, {} as Record<string, number>);
+  }, {} as Record<string, Record<string, number>>);
 
-  const uniqueCategories = Object.entries(categoryCounts).map(([name, count]) => ({
-    name,
-    count,
-  }));
+  const formattedGroupedCategories = Object.entries(groupedCategories).reduce((acc, [mainCat, subCats]) => {
+    acc[mainCat] = Object.entries(subCats).map(([name, count]) => ({ name, count }));
+    return acc;
+  }, {} as Record<string, { name: string, count: number }[]>);
 
   const featuredProviders = directoryData.filter((row) => row.is_featured);
 
@@ -115,39 +122,13 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* Category Grid Section */}
-        <section className="py-16 px-6 max-w-6xl mx-auto">
-          <div className="flex items-center justify-between mb-12">
+        {/* Category Hierarchy Section */}
+        <section className="py-16 px-6 max-w-4xl mx-auto">
+          <div className="flex items-center justify-between mb-10">
             <h2 className="text-4xl font-bold text-slate-900">Browse by Category</h2>
           </div>
           
-          {uniqueCategories.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {uniqueCategories.map((category) => (
-                <Link 
-                  key={category.name} 
-                  href={`/${category.name.toLowerCase()}`}
-                  className="glass-card group p-8 rounded-[2rem] hover:-translate-y-1 hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center space-y-5"
-                >
-                  <div className="p-6 bg-slate-50/80 rounded-full group-hover:bg-blue-50 transition-colors shadow-sm border border-slate-200">
-                    {getCategoryIcon(category.name)}
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-2xl text-slate-900 group-hover:text-blue-600 transition-colors">
-                      {category.name}
-                    </h3>
-                    <p className="text-base text-slate-500 font-medium mt-1">
-                      {category.count} {category.count === 1 ? 'provider' : 'providers'}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-20 glass-card rounded-[3rem]">
-              <p className="text-slate-500 text-xl font-medium">No categories found. Add some data to your Google Sheet!</p>
-            </div>
-          )}
+          <CategoryAccordion groupedCategories={formattedGroupedCategories} />
         </section>
 
         {/* Featured Providers Section */}
@@ -173,7 +154,7 @@ export default async function HomePage() {
           {featuredProviders.length > 0 ? (
             <div className="flex overflow-x-auto pb-10 pt-4 px-6 md:px-12 gap-6 snap-x snap-mandatory hide-scrollbar">
               {featuredProviders.map((provider) => {
-                const icon = getCategoryIcon(provider.category);
+                const icon = getCategoryIcon(provider.sub_category);
                 return (
                   <div key={provider.id} className="min-w-[340px] max-w-[340px] bg-white rounded-[24px] shadow-sm border border-slate-100/80 flex flex-col snap-start hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                     {/* Top Image */}
@@ -215,7 +196,7 @@ export default async function HomePage() {
                       {/* Action Buttons */}
                       <div className="flex space-x-4 mt-auto">
                         <a 
-                          href={`/${provider.category.toLowerCase()}/${provider.id}`}
+                          href={`/${provider.sub_category.toLowerCase()}/${provider.id}`}
                           className="flex-[0.4] border border-slate-200 rounded-xl flex items-center justify-center py-3 text-slate-600 hover:bg-slate-50 transition-colors"
                         >
                           <MapPin className="w-5 h-5" />

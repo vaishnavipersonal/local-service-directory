@@ -6,14 +6,14 @@ import { MapPin, Star, PhoneCall, MessageCircle, Clock, ChevronRight } from 'luc
 export const revalidate = 60; // Revalidate at most every 60 seconds
 
 type Props = {
-  params: Promise<{ category: string }>;
+  params: Promise<{ sub_category: string }>;
 };
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
-  const category = params.category;
+  const subCategory = params.sub_category;
   
-  const decodedCategory = decodeURIComponent(category);
+  const decodedCategory = decodeURIComponent(subCategory);
   const capitalizedCategory = decodedCategory.charAt(0).toUpperCase() + decodedCategory.slice(1);
 
   return {
@@ -24,22 +24,22 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export async function generateStaticParams() {
   const data = await getDirectoryData();
-  const categories = new Set(data.map(provider => provider.category.toLowerCase()));
+  const subCategories = new Set(data.map(provider => provider.sub_category.toLowerCase()));
   
-  return Array.from(categories).map(category => ({
-    category,
+  return Array.from(subCategories).map(sub_category => ({
+    sub_category,
   }));
 }
 
 export default async function CategoryPage(props: Props) {
   const params = await props.params;
-  const categoryStr = params.category;
+  const categoryStr = params.sub_category;
   const decodedCategory = decodeURIComponent(categoryStr);
   const capitalizedCategory = decodedCategory.charAt(0).toUpperCase() + decodedCategory.slice(1);
   
   const directoryData = await getDirectoryData();
   const providers = directoryData.filter(
-    (provider) => provider.category.toLowerCase() === decodedCategory.toLowerCase()
+    (provider) => provider.sub_category.toLowerCase() === decodedCategory.toLowerCase()
   );
 
   return (

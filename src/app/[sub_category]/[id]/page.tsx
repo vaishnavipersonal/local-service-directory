@@ -7,7 +7,7 @@ import { MapPin, Star, PhoneCall, MessageCircle, Clock, ShieldCheck, ChevronRigh
 export const revalidate = 60; // Revalidate at most every 60 seconds
 
 type Props = {
-  params: Promise<{ category: string; id: string }>;
+  params: Promise<{ sub_category: string; id: string }>;
 };
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
@@ -22,22 +22,22 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   }
 
   return {
-    title: provider.meta_title || `${provider.business_name} - ${provider.category} in ${provider.locality}`,
-    description: provider.meta_description || `Contact ${provider.business_name} for ${provider.category} services in ${provider.locality}. Call ${provider.contact_number}.`,
+    title: provider.meta_title || `${provider.business_name} - ${provider.sub_category} in ${provider.locality}`,
+    description: provider.meta_description || `Contact ${provider.business_name} for ${provider.sub_category} services in ${provider.locality}. Call ${provider.contact_number}.`,
   };
 }
 
 export async function generateStaticParams() {
   const data = await getDirectoryData();
   return data.map((provider) => ({
-    category: provider.category.toLowerCase(),
+    sub_category: provider.sub_category.toLowerCase(),
     id: provider.id,
   }));
 }
 
 export default async function ProviderPage(props: Props) {
   const params = await props.params;
-  const categoryStr = params.category;
+  const categoryStr = params.sub_category;
   const idStr = params.id;
   const directoryData = await getDirectoryData();
   const provider = directoryData.find((p) => p.id === idStr);
@@ -98,7 +98,7 @@ export default async function ProviderPage(props: Props) {
               <div className="flex items-center space-x-4 mb-6">
                 <span className="bg-blue-100/80 text-blue-800 text-sm px-4 py-2 rounded-full font-bold inline-flex items-center border border-blue-200">
                   <Store className="w-4 h-4 mr-2" />
-                  {provider.category}
+                  {provider.sub_category}
                 </span>
                 {provider.is_verified && (
                   <span className="bg-emerald-100/80 text-emerald-800 text-sm px-4 py-2 rounded-full font-bold inline-flex items-center border border-emerald-200">

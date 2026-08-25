@@ -4,6 +4,7 @@ import { JWT } from 'google-auth-library';
 export interface DirectoryRow {
   id: string;
   category: string;
+  sub_category: string;
   business_name: string;
   contact_number: string;
   whatsapp_number: string;
@@ -45,6 +46,7 @@ export async function getDirectoryData(): Promise<DirectoryRow[]> {
     return rows.map((row) => ({
       id: row.get('id') || '',
       category: row.get('category') || '',
+      sub_category: row.get('sub category') || '',
       business_name: row.get('business_name') || '',
       contact_number: row.get('contact_number') || '',
       whatsapp_number: row.get('whatsapp_number') || '',
