@@ -156,12 +156,12 @@ export default async function HomePage() {
               {featuredProviders.map((provider) => {
                 const icon = getCategoryIcon(provider.sub_category);
                 
-                // Hardcode local image override for featured providers
                 const localImageOverrides: Record<string, string> = {
                   'FK Plumbing work': '/featured/fk-plumbing.png',
                   'Alok Plumbing Services': '/featured/alok-plumbing.jpg',
                   'AS PLUMBING CONTRACTOR': '/featured/as-plumbing.jpg',
                   'S & A Wooden work & contractor': '/featured/sa-wooden.png',
+                  'Dinesh Electricals and Repair shop': '/featured/dinesh-electricals.jpg',
                 };
                 
                 // Normalise the name to handle case sensitivity and spaces
