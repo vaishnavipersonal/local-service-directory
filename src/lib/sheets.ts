@@ -9,8 +9,8 @@ export interface DirectoryRow {
   contact_number: string;
   whatsapp_number: string;
   locality: string;
-  rating: string;
-  experience_years: string;
+  rating: number | undefined;
+  experience_years: number | undefined;
   is_verified: boolean;
   is_featured: boolean;
   image_url: string;
@@ -18,6 +18,7 @@ export interface DirectoryRow {
   services: string;
   meta_title: string;
   meta_description: string;
+  address: string;
 }
 
 export async function getDirectoryData(): Promise<DirectoryRow[]> {
