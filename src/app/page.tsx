@@ -155,12 +155,28 @@ export default async function HomePage() {
             <div className="flex overflow-x-auto pb-10 pt-4 px-6 md:px-12 gap-6 snap-x snap-mandatory hide-scrollbar">
               {featuredProviders.map((provider) => {
                 const icon = getCategoryIcon(provider.sub_category);
+                
+                // Hardcode local image override for featured providers
+                const localImageOverrides: Record<string, string> = {
+                  'FK Plumbing work': '/featured/fk-plumbing.jpg',
+                  'Alok Plumbing Services': '/featured/alok-plumbing.jpg',
+                  'AS PLUMBING CONTRACTOR': '/featured/as-plumbing.jpg',
+                  'S & A Wooden work & contractor': '/featured/sa-wooden.jpg',
+                };
+                
+                // Normalise the name to handle case sensitivity and spaces
+                const normalizedBusinessName = Object.keys(localImageOverrides).find(
+                  name => name.toLowerCase().trim() === provider.business_name.toLowerCase().trim()
+                );
+                
+                const finalImageUrl = normalizedBusinessName ? localImageOverrides[normalizedBusinessName] : provider.image_url;
+
                 return (
                   <div key={provider.id} className="min-w-[340px] max-w-[340px] bg-white rounded-[24px] shadow-sm border border-slate-100/80 flex flex-col snap-start hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                     {/* Top Image */}
                     <div className="h-48 w-full bg-slate-100 rounded-t-[24px] relative">
-                      {provider.image_url ? (
-                        <img src={provider.image_url} alt={provider.business_name} className="w-full h-full object-cover rounded-t-[24px]" />
+                      {finalImageUrl ? (
+                        <img src={finalImageUrl} alt={provider.business_name} className="w-full h-full object-cover rounded-t-[24px]" />
                       ) : (
                         <div className="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 rounded-t-[24px]" />
                       )}
