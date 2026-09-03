@@ -175,15 +175,6 @@ export default async function ProviderPage(props: Props) {
                   <PhoneCall className="w-6 h-6" />
                   <span>Call Provider</span>
                 </a>
-                <a 
-                  href={`https://wa.me/${provider.whatsapp_number}?text=Hi,%20I%20found%20you%20on%20the%20Local%20Service%20Directory.`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center space-x-3 bg-emerald-500 hover:bg-emerald-600 text-white py-4 rounded-2xl font-bold transition-all shadow-md shadow-emerald-200 hover:-translate-y-0.5 text-lg"
-                >
-                  <MessageCircle className="w-6 h-6" />
-                  <span>WhatsApp Message</span>
-                </a>
               </div>
               <p className="text-center text-sm text-slate-500 font-medium mt-6">
                 Average response time: &lt; 1 hour
