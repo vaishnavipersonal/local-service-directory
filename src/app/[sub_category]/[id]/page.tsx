@@ -124,6 +124,18 @@ export default async function ProviderPage(props: Props) {
                   </div>
                 </div>
 
+                <div className="bg-white/60 rounded-3xl p-6 border border-slate-100 flex items-start space-x-4">
+                  <div className="p-3 bg-blue-50 rounded-2xl text-blue-600">
+                    <PhoneCall className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-lg">Contact Number</h3>
+                    <a href={`tel:${provider.contact_number}`} className="text-blue-600 font-bold text-xl mt-1 hover:underline block">
+                      {provider.contact_number}
+                    </a>
+                  </div>
+                </div>
+
                 {provider.rating && (
                   <div className="bg-white/60 rounded-3xl p-6 border border-slate-100 flex items-start space-x-4">
                     <div className="p-3 bg-amber-50 rounded-2xl text-amber-500">

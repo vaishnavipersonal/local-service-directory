@@ -210,21 +210,12 @@ export default async function HomePage() {
                       </div>
                       
                       {/* Action Buttons */}
-                      <div className="flex space-x-4 mt-auto">
+                      <div className="flex flex-col space-y-3 mt-auto">
                         <a 
                           href={`/${provider.sub_category.toLowerCase()}/${provider.id}`}
-                          className="flex-[0.4] border border-slate-200 rounded-xl flex items-center justify-center py-3 text-slate-600 hover:bg-slate-50 transition-colors"
+                          className="w-full border border-slate-200 rounded-xl flex items-center justify-center py-3 text-slate-700 font-semibold hover:bg-slate-50 transition-colors text-[15px]"
                         >
-                          <MapPin className="w-5 h-5" />
-                        </a>
-                        <a 
-                          href={`https://wa.me/${provider.whatsapp_number}?text=Hi,%20I%20found%20you%20on%20the%20Local%20Service%20Directory.`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 bg-[#12b959] hover:bg-[#0f9e4c] text-white rounded-xl flex items-center justify-center py-3 font-bold text-[15px] transition-colors shadow-sm"
-                        >
-                          <MessageCircle className="w-5 h-5 mr-1.5" />
-                          Chat
+                          View Full Profile
                         </a>
                       </div>
                     </div>

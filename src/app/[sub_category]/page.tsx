@@ -100,27 +100,9 @@ export default async function CategoryPage(props: Props) {
                 </div>
 
                 <div className="mt-auto space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <a 
-                      href={`tel:${provider.contact_number}`} 
-                      className="flex items-center justify-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-2xl font-bold transition-colors shadow-md shadow-blue-200 text-lg"
-                    >
-                      <PhoneCall className="w-5 h-5" />
-                      <span>Call</span>
-                    </a>
-                    <a 
-                      href={`https://wa.me/${provider.whatsapp_number}?text=Hi,%20I%20found%20you%20on%20the%20Local%20Service%20Directory.`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white py-3.5 rounded-2xl font-bold transition-colors shadow-md shadow-emerald-200 text-lg"
-                    >
-                      <MessageCircle className="w-5 h-5" />
-                      <span>WhatsApp</span>
-                    </a>
-                  </div>
                   <Link 
                     href={`/${categoryStr}/${provider.id}`}
-                    className="block text-center w-full py-3.5 text-blue-700 font-bold bg-blue-50/50 hover:bg-blue-100 rounded-2xl transition-colors border border-blue-100"
+                    className="block text-center w-full py-3.5 text-blue-700 font-bold bg-blue-50/50 hover:bg-blue-100 rounded-2xl transition-colors border border-blue-100 text-lg"
                   >
                     View Full Profile
                   </Link>
