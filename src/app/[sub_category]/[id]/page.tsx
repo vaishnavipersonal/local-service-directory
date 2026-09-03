@@ -103,7 +103,7 @@ export default async function ProviderPage(props: Props) {
                 {provider.is_verified && (
                   <span className="bg-emerald-100/80 text-emerald-800 text-sm px-4 py-2 rounded-full font-bold inline-flex items-center border border-emerald-200">
                     <ShieldCheck className="w-4 h-4 mr-2" />
-                    Verified by Saket Directory
+                    Verified by Saket Sathi
                   </span>
                 )}
               </div>

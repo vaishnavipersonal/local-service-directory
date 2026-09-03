@@ -17,8 +17,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const capitalizedCategory = decodedCategory.charAt(0).toUpperCase() + decodedCategory.slice(1);
 
   return {
-    title: `${capitalizedCategory} in Saket | Local Service Directory`,
-    description: `Find trusted, verified ${decodedCategory} in Saket, South Delhi. Contact them directly via phone or WhatsApp.`,
+    title: `${capitalizedCategory} in Saket | Saket Sathi`,
+    description: `Find verified ${decodedCategory} professionals in Saket with Saket Sathi. Contact them directly via phone or WhatsApp.`,
   };
 }
 

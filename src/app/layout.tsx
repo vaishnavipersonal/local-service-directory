@@ -8,8 +8,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Saket Local Directory - Find Trusted Services",
-  description: "Find the best trusted local services, tailored for Saket, South Delhi. Perfect for new residents, couples, and short-term stayers.",
+  title: "Saket Sathi - Find Trusted Local Services in Saket",
+  description: "Discover trusted, verified local service professionals in Saket, South Delhi with Saket Sathi. Perfect for new residents, couples, and short-term stayers.",
 };
 
 export default function RootLayout({

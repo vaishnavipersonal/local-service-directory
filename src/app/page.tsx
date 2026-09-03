@@ -15,7 +15,7 @@ const getCategoryIcon = (category: string) => {
   return <HelpCircle className="w-6 h-6 text-slate-400" />;
 };
 
-const SAKET_FACTS = [
+const SAKET_NEIGHBOURHOOD_FACTS = [
   "Did you know? Saket is named after the mythological ancient city of Ayodhya.",
   "Saket was one of the first areas in Delhi to pioneer the 'Mall Culture' with Anupam PVR in 1997.",
   "Home to the sprawling Garden of Five Senses, a 20-acre park perfect for evening walks.",
@@ -67,17 +67,17 @@ export default async function HomePage() {
             Dedicated to Saket, South Delhi
           </span>
           <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 tracking-tight leading-tight mb-6">
-            The most trusted local services in <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500">Saket.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-emerald-500">Saket Sathi</span> - Trusted local services at your fingertips
           </h1>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto font-medium">
-            Discover verified, top-rated professionals right in your neighborhood. Fast, easy, and built for the Saket community.
+            Discover verified, top-rated professionals right in your neighborhood. Fast, easy, and built by the Saket community for Saket.
           </p>
         </section>
 
         {/* Quirky Facts Marquee */}
         <div className="w-full bg-white border-y border-slate-200 py-5 overflow-hidden flex items-center shadow-sm">
           <div className="flex w-[200%] animate-marquee whitespace-nowrap">
-            {[...SAKET_FACTS, ...SAKET_FACTS].map((fact, i) => (
+            {[...SAKET_NEIGHBOURHOOD_FACTS, ...SAKET_NEIGHBOURHOOD_FACTS].map((fact, i) => (
               <div key={i} className="flex items-center mx-10 text-slate-700 font-semibold text-lg">
                 <span className="text-emerald-500 mr-3 text-xl">✦</span> {fact}
               </div>
@@ -88,8 +88,8 @@ export default async function HomePage() {
         {/* ICP Section (Who is this for?) */}
         <section className="py-24 px-6 max-w-6xl mx-auto">
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Made for everyone in Saket</h2>
-            <p className="text-xl text-slate-600 font-medium">Whether you're here for a month or a lifetime, we've got you covered.</p>
+            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 mb-4">Built for every Saket resident</h2>
+            <p className="text-xl text-slate-600 font-medium">Whether you're here for a month or a lifetime, Saket Sathi has you covered.</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="glass-card rounded-[2.5rem] p-10 text-center hover:scale-[1.02] transition-transform duration-300">
@@ -239,8 +239,8 @@ export default async function HomePage() {
         <section className="py-24 px-6 bg-white/60 backdrop-blur-2xl border-y border-slate-200/80">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-4">Trusted by Your Neighbors</h2>
-              <p className="text-xl text-slate-600 font-medium">See what the Saket community is saying about our platform.</p>
+            <h2 className="text-4xl font-bold text-slate-900 mb-4">Loved by Saket Residents</h2>
+            <p className="text-xl text-slate-600 font-medium">See what the Saket community is saying about Saket Sathi.</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {REVIEWS.map((review) => (
@@ -266,7 +266,7 @@ export default async function HomePage() {
 
         {/* Footer */}
         <footer className="py-12 text-center text-slate-500 font-medium text-lg">
-          <p>© {new Date().getFullYear()} Saket Local Service Directory. Built with ❤️ for South Delhi.</p>
+          <p>© {new Date().getFullYear()} Saket Sathi. Built with ❤️ for the Saket community.</p>
         </footer>
       </div>
     </main>
